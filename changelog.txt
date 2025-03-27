@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 2025-03-??
+
+  Features:
+    - This mod is an internal library.
+    - Added support of SC minerals.
+    - Added support of SC geysers.
