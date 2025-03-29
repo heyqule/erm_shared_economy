@@ -93,11 +93,12 @@ end
 local Refinery = {}
 
 function Refinery.add_terran_machine()
+    if not mods['erm_terran_hd_assets'] then
+        error('Terran asset mod (erm_terran_hd_assets) must be enabled to add terran refinery.')
+    end
+    local TerranAnimationDB = require("__erm_terran_hd_assets__/animation_db")
+    
     if not data.raw['explosion']['terran--building-explosion'] then
-        if not mods['erm_terran_hd_assets'] then
-            error('Terran asset mod (erm_terran_hd_assets) must be enabled to add terran refinery.')
-        end
-        local TerranAnimationDB = require("__erm_terran_hd_assets__/animation_db")
         data.extend({{
                          type = "explosion",
                          name = "terran--building-explosion",
@@ -113,8 +114,8 @@ function Refinery.add_terran_machine()
     end
     
     local options = {
-        name = 'terran_refinery', ---TO CHANGE
-        icon = "__erm_shared_economy__/graphics/refineries/terran-icon.png",
+        name = 'terran_refinery',
+        icon = "__erm_terran_hd_assets__/graphics/entity/buildings/refinery/terran-icon.png",
         max_health = 1200,
         dying_explosion = "terran--building-explosion",
         vector_to_place_result = {0.5, 3.5},
@@ -124,11 +125,11 @@ function Refinery.add_terran_machine()
             emissions_per_minute = { pollution = 12 },
         },
         energy_usage = "90kW",
-        resource_categories = {"erm-geyser-terran"}, ---TO CHANGE
+        resource_categories = {"erm-geyser-terran"},
         mining_speed = 1,
         base_picture = {
             {
-                filename = "__erm_shared_economy__/graphics/refineries/terran.png",
+                filename = "__erm_terran_hd_assets__/graphics/entity/buildings/refinery/terran.png",
                 priority = "extra-high",
                 width = 501,
                 height = 372,
@@ -136,7 +137,7 @@ function Refinery.add_terran_machine()
                 frame_count = 1
             },
             {
-                filename = "__erm_shared_economy__/graphics/refineries/terran.png",
+                filename = "__erm_terran_hd_assets__/graphics/entity/buildings/refinery/terran.png",
                 priority = "extra-high",
                 width = 501,
                 height = 372,
@@ -184,11 +185,12 @@ function Refinery.add_terran_machine()
 end
 
 function Refinery.add_zerg_machine()
+    if not mods['erm_zerg_hd_assets'] then
+        error('Zerg asset mod  (erm_zerg_hd_assets) must be enabled to add zerg refinery.')
+    end
+    local ZergAnimationDB = require("__erm_zerg_hd_assets__/animation_db")
+    
     if not data.raw['explosion']['zerg--building-explosion'] then
-        if not mods['erm_zerg_hd_assets'] then
-            error('Zerg asset mod  (erm_zerg_hd_assets) must be enabled to add zerg refinery.')
-        end
-        local ZergAnimationDB = require("__erm_zerg_hd_assets__/animation_db")
         data.extend({{
              type = "explosion",
              name = "zerg--building-explosion",
@@ -205,7 +207,7 @@ function Refinery.add_zerg_machine()
     
     local options = {
         name = 'zerg_refinery',
-        icon = "__erm_shared_economy__/graphics/refineries/zerg-icon.png",
+        icon = "__erm_zerg_hd_assets__/graphics/entity/buildings/extractor/zerg-icon.png",
         max_health = 1200,
         dying_explosion = "zerg--building-explosion",
         vector_to_place_result = {0.5, 3.5},
@@ -217,31 +219,13 @@ function Refinery.add_zerg_machine()
         resource_categories = {"erm-geyser-zerg"},
         mining_speed = 1,
         base_picture = {
-            {
-                filename = "__erm_shared_economy__/graphics/refineries/zerg.png",
-                priority = "extra-high",
-                width = 512,
-                height = 468,
-                scale = 0.5,
-                frame_count = 1,
-                shift = util.by_pixel(0, -32),
-            },
-            {
-                filename = "__erm_shared_economy__/graphics/refineries/zerg.png",
-                priority = "extra-high",
-                width = 512,
-                height = 468,
-                scale = 0.5,
-                shift = util.by_pixel(12, -34),
-                frame_count = 1,
-                draw_as_shadow = true
-            },
+            util.empty_sprite()
         },
         animations = {
             layers =
             {
                 {
-                    filename = "__erm_shared_economy__/graphics/refineries/zerg-animation.png",
+                    filename = "__erm_zerg_hd_assets__/graphics/entity/buildings/extractor/zerg-animation.png",
                     priority = "extra-high",
                     width = 512,
                     height = 468,
@@ -263,11 +247,11 @@ function Refinery.add_zerg_machine()
 end
 
 function Refinery.add_protoss_machine()
+    if not mods['erm_toss_hd_assets'] then
+        error('Protoss asset mod (erm_toss_hd_assets) must be enabled to add protoss refinery.')
+    end
+    local ProtossAnimationDB = require("__erm_toss_hd_assets__/animation_db")
     if not data.raw["explosion"]["protoss--large-building-explosion"] then
-        if not mods['erm_toss_hd_assets'] then
-            error('Protoss asset mod (erm_toss_hd_assets) must be enabled to add protoss refinery.')
-        end
-        local ProtossAnimationDB = require("__erm_toss_hd_assets__/animation_db")
         data.extend({
             {
                 type = "explosion",
@@ -286,7 +270,7 @@ function Refinery.add_protoss_machine()
     
     local options = {
         name = 'protoss_refinery',
-        icon = "__erm_shared_economy__/graphics/refineries/protoss-icon.png",
+        icon = "__erm_toss_hd_assets__/graphics/entity/buildings/assimilator/protoss-icon.png",
         max_health = 1200,
         dying_explosion = "protoss--large-building-explosion",
         vector_to_place_result = {0.5, 3.5},
@@ -300,7 +284,7 @@ function Refinery.add_protoss_machine()
         mining_speed = 1,
         base_picture = {
             {
-                filename = "__erm_shared_economy__/graphics/refineries/protoss.png",
+                filename = "__erm_toss_hd_assets__/graphics/entity/buildings/assimilator/protoss.png",
                 priority = "extra-high",
                 width = 485,
                 height = 377,
@@ -308,7 +292,7 @@ function Refinery.add_protoss_machine()
                 frame_count = 1
             },
             {
-                filename = "__erm_shared_economy__/graphics/refineries/protoss.png",
+                filename = "__erm_toss_hd_assets__/graphics/entity/buildings/assimilator/protoss.png",
                 priority = "extra-high",
                 width = 485,
                 height = 377,
