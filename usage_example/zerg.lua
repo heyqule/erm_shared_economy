@@ -3,12 +3,15 @@
 --- Created by heyqule.
 --- DateTime: 3/29/2025 12:34 AM
 ---
+--- Note, you must add "erm_zerg_hd_assets >= 2.0.3" as dependency in your mod
+---
+---
 local Minerals = require('__erm_shared_economy__/prototypes/mineral')
 local Geyser = require('__erm_shared_economy__/prototypes/geyser')
 local Refinery = require('__erm_shared_economy__/prototypes/refinery')
 
 --- Char mineral uses vulcanus_calcite_probability for placement
-local mineral_name = 'char-mineral-ore' -- @CHANGEME
+local mineral_name = 'char_mineral' -- @CHANGEME
 Minerals.add_resource({
     name = mineral_name,
     order = 'b', -- same order as iron
@@ -37,7 +40,7 @@ Minerals.add_recycle_recipe({
 })
 
 
-local geyser_name = 'char-geyser' -- @CHANGEME
+local geyser_name = 'char_geyser' -- @CHANGEME
 Geyser.add_resource({
     name = geyser_name,
     type = 'zerg',
@@ -51,6 +54,7 @@ Geyser.add_resource({
     starting_rq_factor_multiplier = 1.5,
     smoke_color_1_outer = {r=0.72, g=0.79, b=0.43},
     smoke_color_1_outer_strength = 0.2,
+    --- smoke_color_1_inner controls refinery smoke color
     smoke_color_1_inner = {r=0.72, g=0.79, b=0.43},
     smoke_color_1_inner_strength = 0.5,
     smoke_color_2_outer = {r=0.72, g=0.79, b=0.43},
@@ -79,20 +83,21 @@ Geyser.add_refinery_recipe({
 Refinery.add_zerg_machine()
 
 
---- Add these to technology that unlocks them, usually from planet discovery research
-{
-    --- Unlock protoss refinery, it's global
-    {
-        type = "unlock-recipe",
-        recipe = "zerg_refinery"
-    },
-    --- Unlock planet specific refinery and recipes
-    {
-        type = "unlock-recipe",
-        recipe = geyser_name.."-refinery"
-    },
-    {
-        type = "unlock-recipe",
-        recipe = mineral_name.."-recycling"
-    }
-} 
+--- Add these to technology that unlocks them, usually in planet discovery research
+
+--- Add refinery unlock
+table.insert(data.raw['technology']['technology_name']['effects'],     {
+    type = "unlock-recipe",
+    recipe = "terran_refinery"
+})
+
+--- Unlock planet specific refinery and recipes
+table.insert(data.raw['technology']['technology_name']['effects'],         {
+    type = "unlock-recipe",
+    recipe = geyser_name.."-refinery"
+})
+
+table.insert(data.raw['technology']['technology_name']['effects'],         {
+    type = "unlock-recipe",
+    recipe = mineral_name.."-recycling"
+})

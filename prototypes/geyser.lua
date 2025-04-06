@@ -15,10 +15,11 @@ function Geyser.add_resource(options)
     local type = options.type or 'terran'
     local geyser_type = "erm-geyser-"..type
     local name = options.name
+    local global_shift = 30
     data.extend({
         {
             type = "item-subgroup",
-            name = "erm-geyser-processes-"..type,
+            name = "erm-geyser-processes",
             group = "intermediate-products",
             order = "j"
         },
@@ -31,7 +32,7 @@ function Geyser.add_resource(options)
             name = name,
             localised_name = {"", "[entity="..name.."]", {"entity-name."..name}},
             richness = true,
-            order = "m-"..options.order,
+            order = 'm'..name,
             category = "resource"
         },
         {
@@ -44,8 +45,8 @@ function Geyser.add_resource(options)
             category = geyser_type,
             infinite = true,
             highlight = true,
-            minimum = 60000,
-            normal = 300000,
+            minimum = 75000,
+            normal = 500000,
             infinite_depletion_amount = 10,
             resource_patch_search_radius = 12,
             tree_removal_probability = 0.8,
@@ -58,8 +59,9 @@ function Geyser.add_resource(options)
                 mining_time = options.mining_time,
                 result = name,
             },
-            collision_box = {{-3, -2}, {3, 3}},
-            selection_box = {{-3, -2}, {3, 3}},
+            collision_box = {{-3, -3}, {3, 3}},
+            selection_box = {{-3, -3}, {3, 3}},
+            map_generator_bounding_box = {{-4, -4}, {4, 4}},
             autoplace = resource_autoplace.resource_autoplace_settings
             {
                 name = name,
@@ -73,7 +75,8 @@ function Geyser.add_resource(options)
                 tile_restriction = options.tile_restriction,
                 random_probability = options.random_probability,
                 random_spot_size_minimum = options.random_spot_size_minimum,
-                random_spot_size_maximum = options.random_spot_size_maximum
+                random_spot_size_maximum = options.random_spot_size_maximum,
+                additional_richness = options.additional_richness or 100000
             },
             stage_counts = {0},
             stages =
@@ -86,7 +89,8 @@ function Geyser.add_resource(options)
                     height = 270,
                     frame_count = 3,
                     variation_count = 1,
-                    scale = 0.5
+                    scale = 0.5,
+                    shift = util.by_pixel(0, global_shift),
                 }
             },
             stateless_visualisation =
@@ -101,7 +105,7 @@ function Geyser.add_resource(options)
                         width = 90,
                         height = 188,
                         animation_speed = 0.3,
-                        shift = util.by_pixel(-62, 20 -152),
+                        shift = util.by_pixel(-62, 20-152+global_shift),
                         scale = 1.0,
                         tint = util.multiply_color(options.smoke_color_1_outer, options.smoke_color_1_outer_strength)
                     }
@@ -116,7 +120,7 @@ function Geyser.add_resource(options)
                         width = 40,
                         height = 84,
                         animation_speed = 0.3,
-                        shift = util.by_pixel(-60, 20 -78),
+                        shift = util.by_pixel(-60, 20 -78+global_shift),
                         scale = 1.0,
                         tint = util.multiply_color(options.smoke_color_1_inner, options.smoke_color_1_inner_strength)
                     }
@@ -131,7 +135,7 @@ function Geyser.add_resource(options)
                         width = 90,
                         height = 188,
                         animation_speed = 0.5,
-                        shift = util.by_pixel(33, -0 -152),
+                        shift = util.by_pixel(33, -0 -152+global_shift),
                         scale = 1.2,
                         tint = util.multiply_color(options.smoke_color_2_outer, options.smoke_color_2_outer_strength)
                     }
@@ -146,13 +150,13 @@ function Geyser.add_resource(options)
                         width = 40,
                         height = 84,
                         animation_speed = 0.5,
-                        shift = util.by_pixel(35, -0 -78),
+                        shift = util.by_pixel(35, -0 -78+global_shift),
                         scale = 1.2,
                         tint = util.multiply_color(options.smoke_color_2_inner, options.smoke_color_2_inner_strength)
                     }
                 }
             },
-            mining_visualisation_tint = {r = 0.435, g = 0.659, b = 0.863, a = 1.000}, -- #cfff7fff
+            mining_visualisation_tint = options.smoke_color_1_inner,
             map_color = options.map_color
         },
         {
@@ -163,8 +167,8 @@ function Geyser.add_resource(options)
             {
                 { size = 64, filename = "__erm_shared_economy__/graphics/geyser/"..type.."-icon.png",   scale = 0.5 },
             },
-            subgroup = "erm-geyser-processes-"..type,
-            order = "a[geyser]-a["..options.name.."]",
+            subgroup = "erm-geyser-processes",
+            order = "x[geyser]-a["..options.name.."]",
             inventory_move_sound = item_sounds.resource_inventory_move,
             pick_sound = item_sounds.resource_inventory_pickup,
             drop_sound = item_sounds.resource_inventory_move,
@@ -191,13 +195,17 @@ function Geyser.add_refinery_recipe(options)
                     scale = 0.4
                 },
                 {
-                    icon = "__base__/graphics/icons/arrows/down-arrow.png"
-                }
+                    icon = "__base__/graphics/icons/arrows/down-arrow.png",
+                    icon_size = 64,
+                    scale = 0.5,
+                    shift = {0, 18}
+                },
             },
             category = "oil-processing",
-            subgroup = "erm-geyser-processes-"..options.type,
+            subgroup = "erm-geyser-processes",
             order = "a[geyser]-a["..name.."-refinery]",
             enabled = options.enabled,
+            hide_from_player_crafting = false,
             auto_recycle = false,
             energy_required = options.energy_required,
             ingredients = options.ingredients,

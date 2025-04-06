@@ -1,8 +1,11 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.0
-Date: 2025-03-??
+Date: 2025-04-??
 
   Features:
     - This mod is an internal library.
     - Added support of SC minerals.
     - Added support of SC geysers.
+    - Added support of 3 type of refinery for geysers. Refinery, Extractor and Assimilator.
+    - Refinery smoke are tinted by resource color .
+    

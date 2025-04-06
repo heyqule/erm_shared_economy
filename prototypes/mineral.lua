@@ -11,6 +11,18 @@ local simulations = require("__space-age__.prototypes.factoriopedia-simulations"
 
 local Mineral = {}
 
+local color_mapping = {
+    blue = {0, 0.667, 1.000},
+    green = {0.169, 0.506, 0.188},
+    orange = {0.616, 0.314, 0.153},
+    purple = {0.384, 0.282, 0.467},
+    yellow = {0.859, 0.729, 0.208},
+}
+
+local get_map_color = function(color_name)
+    return color_mapping[color_name]
+end
+
 function Mineral.add_resource(options)
     local name = options.name
     data.extend({
@@ -25,13 +37,13 @@ function Mineral.add_resource(options)
             name = name,
             localised_name = {"", "[entity="..name.."]", {"entity-name."..name}},
             richness = true,
-            order = "m-"..options.order,
+            order = 'm'..name,
             category = "resource"
         },
         {
             type = "resource",
             name = name,
-            icon = "__erm_shared_economy__/graphics/minerals/icon.png",
+            icon = "__erm_shared_economy__/graphics/minerals/"..options.icon_color.."/icon.png",
             flags = {"placeable-neutral"},
             --factoriopedia_simulation = simulations.factoriopedia_uranium_ore,
             order = "a-b-"..options.order,
@@ -57,14 +69,18 @@ function Mineral.add_resource(options)
                 regular_rq_factor_multiplier = options.regular_rq_factor_multiplier,
                 starting_rq_factor_multiplier = options.starting_rq_factor_multiplier,
                 candidate_spot_count = options.candidate_spot_count,
-                tile_restriction = options.tile_restriction
+                tile_restriction = options.tile_restriction,
+                random_probability = options.random_probability,
+                random_spot_size_minimum = options.random_spot_size_minimum,
+                random_spot_size_maximum = options.random_spot_size_maximum,
+                additional_richness = options.additional_richness or 0
             },
             stage_counts = {8000, 4000, 1000, 200},
             stages =
             {
                 sheet =
                 {
-                    filename = "__erm_shared_economy__/graphics/minerals/stages.png",
+                    filename = "__erm_shared_economy__/graphics/minerals/"..options.icon_color.."/stages.png",
                     priority = "extra-high",
                     width = 128,
                     height = 128,
@@ -77,7 +93,7 @@ function Mineral.add_resource(options)
             {
                 sheet =
                 {
-                    filename = "__erm_shared_economy__/graphics/minerals/stages.png",
+                    filename = "__erm_shared_economy__/graphics/minerals/"..options.icon_color.."/stages.png",
                     priority = "extra-high",
                     width = 128,
                     height = 128,
@@ -94,18 +110,18 @@ function Mineral.add_resource(options)
             min_effect_alpha = 0.2,
             max_effect_alpha = 0.3,
             mining_visualisation_tint = {r = 0.435, g = 0.659, b = 0.863, a = 1.000}, -- #cfff7fff
-            map_color = {0, 0.667, 1.000}
+            map_color = get_map_color(options.icon_color)
         },
         {
             type = "item",
             name = name,
-            icon = "__erm_shared_economy__/graphics/minerals/icon.png",
+            icon = "__erm_shared_economy__/graphics/minerals/"..options.icon_color.."/icon.png",
             pictures =
             {
-                { size = 64, filename = "__erm_shared_economy__/graphics/minerals/icon.png",   scale = 0.5 },
-                { size = 64, filename = "__erm_shared_economy__/graphics/minerals/icon-2.png", scale = 0.5 },
-                { size = 64, filename = "__erm_shared_economy__/graphics/minerals/icon-3.png", scale = 0.5 },
-                { size = 64, filename = "__erm_shared_economy__/graphics/minerals/icon-4.png", scale = 0.5 },
+                { size = 64, filename = "__erm_shared_economy__/graphics/minerals/"..options.icon_color.."/icon.png",   scale = 0.5 },
+                { size = 64, filename = "__erm_shared_economy__/graphics/minerals/"..options.icon_color.."/icon-2.png", scale = 0.5 },
+                { size = 64, filename = "__erm_shared_economy__/graphics/minerals/"..options.icon_color.."/icon-3.png", scale = 0.5 },
+                { size = 64, filename = "__erm_shared_economy__/graphics/minerals/"..options.icon_color.."/icon-4.png", scale = 0.5 },
             },
             subgroup = "erm-mineral-processes",
             order = "a[mineral-ore]-a["..options.name.."]",
@@ -134,7 +150,7 @@ function Mineral.add_recycle_recipe(options)
                     icon = "__quality__/graphics/icons/recycling.png"
                 },
                 {
-                    icon = "__erm_shared_economy__/graphics/minerals/icon.png",
+                    icon = "__erm_shared_economy__/graphics/minerals/"..options.icon_color.."/icon.png",
                     scale = 0.4
                 },
                 {
@@ -143,9 +159,10 @@ function Mineral.add_recycle_recipe(options)
             },
             category = "recycling-or-hand-crafting",
             subgroup = "erm-mineral-processes",
-            order = "a[trash]-a["..name.."-recycling]",
+            order = "x[trash]-a["..name.."-recycling]",
             enabled = options.enabled,
             auto_recycle = false,
+            hide_from_player_crafting = false,
             energy_required = options.energy_required,
             ingredients = options.ingredients,
             results = options.results

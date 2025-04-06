@@ -3,11 +3,13 @@
 --- Created by heyqule.
 --- DateTime: 3/29/2025 12:34 AM
 ---
+--- Note, you must add "erm_protoss_hd_assets >= 2.0.1" as dependency in your mod
+---
 local Minerals = require('__erm_shared_economy__/prototypes/mineral')
 local Geyser = require('__erm_shared_economy__/prototypes/geyser')
 local Refinery = require('__erm_shared_economy__/prototypes/refinery')
 
-local mineral_name = 'aiur-mineral' -- @CHANGEME
+local mineral_name = 'aiur_mineral' -- @CHANGEME
 Minerals.add_resource({
     name = mineral_name,
     order = 'b', -- same order as iron
@@ -37,7 +39,7 @@ Minerals.add_recycle_recipe({
     }
 })
 
-local geyser_name = 'aiur-geyser' -- @CHANGEME
+local geyser_name = 'aiur_eyser' -- @CHANGEME
 Geyser.add_resource({
     name = geyser_name,
     type = 'protoss',
@@ -55,6 +57,7 @@ Geyser.add_resource({
 
     smoke_color_1_outer = {r=0.353, g=1, b=0},
     smoke_color_1_outer_strength = 0.2,
+    --- smoke_color_1_inner controls refinery smoke color
     smoke_color_1_inner = {r=0.353, g=1, b=0},
     smoke_color_1_inner_strength = 0.5,
     smoke_color_2_outer = {r=0.353, g=1, b=0},
@@ -82,20 +85,21 @@ Geyser.add_refinery_recipe({
 --- This is global.  
 Refinery.add_protoss_machine()
 
---- Add these to technology that unlocks them, usually from planet discovery research
-{
-    --- Unlock protoss refinery, it's global
-    {
-        type = "unlock-recipe",
-        recipe = "protoss_refinery"
-    },
-    --- Unlock planet specific refinery and recipes
-    {
-        type = "unlock-recipe",
-        recipe = geyser_name.."-refinery"
-    },
-    {
-        type = "unlock-recipe",
-        recipe = mineral_name.."-recycling"
-    }
-} 
+--- Add these to technology that unlocks them, usually in planet discovery research
+
+--- Add refinery unlock
+table.insert(data.raw['technology']['technology_name']['effects'],     {
+    type = "unlock-recipe",
+    recipe = "terran_refinery"
+})
+
+--- Unlock planet specific refinery and recipes
+table.insert(data.raw['technology']['technology_name']['effects'],         {
+    type = "unlock-recipe",
+    recipe = geyser_name.."-refinery"
+})
+
+table.insert(data.raw['technology']['technology_name']['effects'],         {
+    type = "unlock-recipe",
+    recipe = mineral_name.."-recycling"
+})

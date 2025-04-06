@@ -18,19 +18,19 @@ local function add_miner(options)
             type = "mining-drill",
             name = options.name,
             icon = options.icon,
-            flags = {"placeable-neutral", "player-creation", "not-rotatable"},
+            flags = {"placeable-neutral", "player-creation"},
             minable = {mining_time = 0.5, result = options.name},
             resource_categories = options.resource_categories,
             max_health = options.max_health,
             dying_explosion = options.dying_explosion,
-            collision_box = {{-3, -2}, {3, 3}},
+            collision_box = {{-3, -3}, {3, 3}},
             selection_box = {{-3, -3}, {3, 3}},
             damaged_trigger_effect = hit_effects.entity(),
             drawing_box_vertical_extension = 1,
             energy_source = options.energy_source,
             energy_usage = options.energy_usage,
             mining_speed = options.mining_speed,
-            resource_searching_radius = 0.45,
+            resource_searching_radius = 0.6,
             vector_to_place_result = options.vector_to_place_result,
             module_slots = 2,
             radius_visualisation_picture =
@@ -47,9 +47,13 @@ local function add_miner(options)
             },
             graphics_set =
             {
-                animation =
-                {
-                    north = options.animations
+                animation = options.animations,
+                working_visualisations = {
+                    {
+                        constant_speed = true,
+                        apply_tint = "resource-color",
+                        animation = options.smoke_animations
+                    }
                 }
             },
             open_sound = {filename = "__base__/sound/open-close/pumpjack-open.ogg", volume = 0.5},
@@ -70,7 +74,7 @@ local function add_miner(options)
             name = options.name,
             icon = options.icon,
             subgroup = "extraction-machine",
-            order = "b[erm-geyser]-b["..options.name.."]",
+            order = "x[erm-geyser]-b["..options.name.."]",
             inventory_move_sound = item_sounds.pumpjack_inventory_move,
             pick_sound = item_sounds.pumpjack_inventory_pickup,
             drop_sound = item_sounds.pumpjack_inventory_move,
@@ -147,7 +151,7 @@ function Refinery.add_terran_machine()
                 draw_as_shadow = true
             },
         },
-        animations = {
+        smoke_animations = {
             layers =
             {
                 {
@@ -158,8 +162,7 @@ function Refinery.add_terran_machine()
                     height = 84,
                     animation_speed = 0.3,
                     shift = util.by_pixel(13, -140),
-                    scale = 1.5,
-                    tint = util.multiply_color({r=0.353, g=1, b=0}, 0.7)
+                    scale = 1.5
                 },
                 {
                     filename = "__base__/graphics/entity/crude-oil/oil-smoke-outer.png",
@@ -170,7 +173,6 @@ function Refinery.add_terran_machine()
                     animation_speed = 0.5,
                     shift = util.by_pixel(13, -203),
                     scale = 1.5,
-                    tint = util.multiply_color({r=0.353, g=1, b=0}, 0.3)
                 }
             }
         },
@@ -211,9 +213,14 @@ function Refinery.add_zerg_machine()
         max_health = 1200,
         dying_explosion = "zerg--building-explosion",
         vector_to_place_result = {0.5, 3.5},
-        energy_source =   {
-            type = "electric",
-            usage_priority = "secondary-input",
+        energy_source =
+        {
+            type = "burner",
+            fuel_categories = {"nutrients"},
+            effectivity = 1,
+            burner_usage = "nutrients",
+            fuel_inventory_size = 1,
+            emissions_per_minute = { pollution = 4 },
         },
         energy_usage = "90kW",
         resource_categories = {"erm-geyser-zerg"},
@@ -234,7 +241,43 @@ function Refinery.add_zerg_machine()
                     animation_speed = 0.1,
                     shift = util.by_pixel(0, -32),
                 },
+                {
+                    filename = "__erm_zerg_hd_assets__/graphics/entity/buildings/extractor/zerg-animation.png",
+                    priority = "extra-high",
+                    width = 512,
+                    height = 468,
+                    scale = 0.5,
+                    frame_count = 4,
+                    animation_speed = 0.1,
+                    shift = util.by_pixel(12, -30),
+                    draw_as_shadow = true
+                },
             }
+        },
+        smoke_animations = {
+            layers =
+            {
+                {
+                    filename = "__base__/graphics/entity/crude-oil/oil-smoke-inner.png",
+                    frame_count = 47,
+                    line_length = 16,
+                    width = 40,
+                    height = 84,
+                    animation_speed = 0.3,
+                    shift = util.by_pixel(40, -80),
+                    scale = 1.0
+                },
+                {
+                    filename = "__base__/graphics/entity/crude-oil/oil-smoke-outer.png",
+                    frame_count = 47,
+                    line_length = 16,
+                    width = 90,
+                    height = 188,
+                    animation_speed = 0.5,
+                    shift = util.by_pixel(40, -143),
+                    scale = 1.0,
+                }
+            }            
         },
         ingredients = {
             {type = "item", name = "steel-plate", amount = 5},
@@ -302,7 +345,7 @@ function Refinery.add_protoss_machine()
                 draw_as_shadow = true
             },
         },
-        animations = {
+        smoke_animations = {
             layers =
             {
                 {
@@ -314,7 +357,6 @@ function Refinery.add_protoss_machine()
                     animation_speed = 0.3,
                     shift = util.by_pixel(-92, -110),
                     scale = 1.0,
-                    tint = util.multiply_color({r=0.353, g=1, b=0}, 0.5)
                 },
                 {
                     filename = "__base__/graphics/entity/crude-oil/oil-smoke-inner.png",
@@ -325,7 +367,6 @@ function Refinery.add_protoss_machine()
                     animation_speed = 0.3,
                     shift = util.by_pixel(60, -130),
                     scale = 1.0,
-                    tint = util.multiply_color({r=0.353, g=1, b=0}, 0.5)
                 },
                 {
                     filename = "__base__/graphics/entity/crude-oil/oil-smoke-inner.png",
@@ -336,7 +377,6 @@ function Refinery.add_protoss_machine()
                     animation_speed = 0.15,
                     shift = util.by_pixel(85, -40),
                     scale = 1.0,
-                    tint = util.multiply_color({r=0.353, g=1, b=0}, 0.5)
                 },
             }
         },

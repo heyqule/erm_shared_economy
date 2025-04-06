@@ -1,7 +1,7 @@
 {
   "name": "erm_shared_economy",
   "version": "1.0.0",
-  "date": "2025-03-??",
+  "date": "2025-04-??",
   "title": "ERM - Shared Economy",
   "author": "heyqule",
   "description": "ERM Economy Internal Library for enemy mods.  It does nothing by itself.",
@@ -10,8 +10,8 @@
     "base >= 2.0.34",
     "?space-age >= 2.0.0",
     "enemyracemanager >= 2.0.23",
-    "(?) erm_terran_hd_assets >= 2.0.0",
-    "(?) erm_zerg_hd_assets >= 2.0.0",
-    "(?) erm_toss_hd_assets >= 2.0.0"
+    "(?) erm_terran_hd_assets >= 2.0.1",
+    "(?) erm_zerg_hd_assets >= 2.0.3",
+    "(?) erm_toss_hd_assets >= 2.0.1"
   ]
 }
