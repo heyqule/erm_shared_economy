@@ -130,7 +130,7 @@ function Mineral.add_resource(options)
             drop_sound = item_sounds.resource_inventory_move,
             stack_size = 50,
             default_import_location = options.import_location,
-            weight = 2*kg
+            weight = 10*kg
         },
     })
 
