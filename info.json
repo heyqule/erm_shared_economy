@@ -9,7 +9,7 @@
   "dependencies": [
     "base >= 2.0.34",
     "?space-age >= 2.0.0",
-    "enemyracemanager >= 2.0.23",
+    "enemyracemanager >= 2.0.26",
     "(?) erm_terran_hd_assets >= 2.0.1",
     "(?) erm_zerg_hd_assets >= 2.0.3",
     "(?) erm_toss_hd_assets >= 2.0.1"
