@@ -1,11 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 2025-04-11
+  
+  Changes:
+    - Fixed info.json date.
+
+---------------------------------------------------------------------------------------------------
 Version: 1.0.0
-Date: 2025-04-??
+Date: 2025-04-11
 
   Features:
     - This mod is an internal library.
     - Added support of SC minerals.
-    - Added support of SC geysers.
+    - Mineral colors: blue, green, orange, purple, yellow
+    - Added support of SC geysers..
     - Added support of 3 type of refinery for geysers. Refinery, Extractor and Assimilator.
-    - Refinery smoke are tinted by resource color .
-    
+    - Geysers and refinery smoke are tinted by resource color.
