@@ -39,7 +39,7 @@ Minerals.add_recycle_recipe({
     }
 })
 
-local geyser_name = 'aiur_eyser' -- @CHANGEME
+local geyser_name = 'aiur_geyser' -- @CHANGEME
 Geyser.add_resource({
     name = geyser_name,
     type = 'protoss',

@@ -201,7 +201,7 @@ function Geyser.add_refinery_recipe(options)
                     shift = {0, 18}
                 },
             },
-            category = "oil-processing",
+            categories = {"oil-processing"},
             subgroup = "erm-geyser-processes",
             order = "a[geyser]-a["..name.."-refinery]",
             enabled = options.enabled,
