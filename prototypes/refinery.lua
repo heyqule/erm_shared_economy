@@ -326,24 +326,29 @@ function Refinery.add_protoss_machine()
         resource_categories = {"erm-geyser-protoss"},
         mining_speed = 1,
         base_picture = {
-            {
-                filename = "__erm_toss_hd_assets__/graphics/entity/buildings/assimilator/protoss.png",
-                priority = "extra-high",
-                width = 485,
-                height = 377,
-                scale = 0.55,
-                frame_count = 1
-            },
-            {
-                filename = "__erm_toss_hd_assets__/graphics/entity/buildings/assimilator/protoss.png",
-                priority = "extra-high",
-                width = 485,
-                height = 377,
-                scale = 0.55,
-                shift = util.by_pixel(12, 2),
-                frame_count = 1,
-                draw_as_shadow = true
-            },
+            util.empty_sprite()
+        },
+        animations = {
+            layers = {
+                {
+                    filename = "__erm_toss_hd_assets__/graphics/entity/buildings/assimilator/protoss.png",
+                    priority = "extra-high",
+                    width = 485,
+                    height = 377,
+                    scale = 0.55,
+                    frame_count = 1
+                },
+                {
+                    filename = "__erm_toss_hd_assets__/graphics/entity/buildings/assimilator/protoss.png",
+                    priority = "extra-high",
+                    width = 485,
+                    height = 377,
+                    scale = 0.55,
+                    shift = util.by_pixel(12, 2),
+                    frame_count = 1,
+                    draw_as_shadow = true
+                },                
+            }
         },
         smoke_animations = {
             layers =

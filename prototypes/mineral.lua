@@ -157,7 +157,7 @@ function Mineral.add_recycle_recipe(options)
                     icon = "__recycler__/graphics/icons/recycling-top.png"
                 }
             },
-            categories = {"hand-crafting"},
+            categories = {"recycling", "hand-crafting"},
             subgroup = "erm-mineral-processes",
             order = "x[trash]-a["..name.."-recycling]",
             enabled = options.enabled,
